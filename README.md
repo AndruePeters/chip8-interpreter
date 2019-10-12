@@ -77,6 +77,6 @@ Interpreter for Chip 8. First emulator using this resource: http://www.multigest
 | FX18     | Sound  | sound_timer(VX)      | Sets the sound timer to VX.  |
 | FX1E     | MEM    | I += VX              | Adds VX to I.  |
 | FX29     | MEM    | I = sprite_addr[VX]  | Sets I to the location of the sprite for the character in VX. Characters 0-F are represented by 4x5 font.  |
-| FX33     | BCD    | set_BCD(VX)          | Stores VCD representation of VX.  |
+| FX33     | BCD    | set_BCD(VX)          | Stores BCD representation of VX. For number 123, 1 is stored at I, 2 is stored at I+1, and 3 is stored at I+2. |
 | FX55     | MEM    | reg_dump(VX, &I)     | Stores V0 to VX in memory starting address I. Offset from I is incrased by 1 for each value written, but I itself is not modified.  |
 | FX65     | MEM    | reg_load(VX, &I)     | Fills V0 to VX with values from memory starting at address I. The offset from I is incrased by 1 for each value written, but I itself is not modified.  |
