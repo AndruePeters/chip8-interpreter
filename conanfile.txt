@@ -1,0 +1,15 @@
+[requires]
+sfml/2.5.1@bincrafters/stable
+spdlog/[>=1.4.1]@bincrafters/stable
+rang/3.1.0@rang/stable
+
+[generators]
+cmake
+cmake_find_package
+
+[options]
+sfml:shared=False
+sfml:graphics=True
+sfml:audio=False
+sfml:window=True
+
