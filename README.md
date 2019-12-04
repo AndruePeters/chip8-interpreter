@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AndruePeters/chip8-interpreter.svg?branch=master)](https://travis-ci.org/AndruePeters/chip8-interpreter)
+
 # chip8-interpreter
 Interpreter for Chip 8. First emulator using this resource: http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/
 
