@@ -42,6 +42,22 @@ enum class OPCodeMask: uint16_t {
     SRL = 0x8006,
     SUB_R = 0x8007,
     SLL = 0x800E,
+    NEQ = 0x9000,
+    SET_SP = 0xA000,
+    JMP = 0xB000,
+    RAND = 0xC000,
+    DRAW = 0xD000,
+    KEY_EQ = 0xE09E,
+    KEY_NEQ = 0xE0A1,
+    TMR_GET = 0xF007,
+    KEY_GET = 0xF00A,
+    TMR_SET = 0xF015,
+    STMR_SET = 0xF018,
+    PC_INC = 0xF01E,
+    DRW_CHAR = 0xF029,
+    BCD = 0xF033,
+    MEM1 = 0xF055,
+    MEM2 = 0xF065
 
 };
 
