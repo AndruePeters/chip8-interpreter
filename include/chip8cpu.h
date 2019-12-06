@@ -8,20 +8,11 @@
 
 namespace chip8 {
 
-template <RegisterWidth W, RegisterSize S>
-class Register {
 
-};
 
-template <MemoryWidth W, MemorySize S>
-class Memory {
 
-};
 
-template <StackWidth W, StackSize S>
-class Stack {
 
-};
 
 enum class OPCodeMask: uint16_t {
     CLS = 0x00E0,
@@ -61,7 +52,7 @@ enum class OPCodeMask: uint16_t {
 
 };
 
-template <Reg R, Mem M, Stack S>
+
 class cpu {
 
     std::array<uint8_t, 4096> ram_;
