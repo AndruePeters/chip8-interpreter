@@ -11,7 +11,7 @@ class Memory {
 public:
     [[nodiscard]] constexpr auto get(const MemType address) const ;
     void constexpr set(MemType address, MemType val);
-    auto constexpr size() const { return memory.size(); }
+    [[nodiscard]] auto constexpr size() const { return memory.size(); }
 
 protected:
     std::array<MemType, s> memory;
