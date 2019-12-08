@@ -6,16 +6,29 @@
 
 
 namespace cpu_lib {
-
-template <typename MemType, class MemCont  = std::array<W>>
+template <class MemType, std::size_t s>
 class Memory {
 public:
-    auto get(const MemType address) const;
-    void set(MemType address, auto const val);
-    void dump() const;
+    [[nodiscard]] constexpr auto get(const MemType address) const ;
+    void constexpr set(MemType address, MemType val) noexcept;
+    auto constexpr size() const { return memory.size(); }
+
 protected:
-    MemCont<MemType> memory;
-}; // end class Memory
+    std::array<MemType, s> memory;
+};
+
+template <class MemType, std::size_t s>
+constexpr auto Memory<MemType, s>::get(const MemType address) const  {
+    if (address >= this->size()) { throw std::out_of_range("ArrayList<X>::at() : index is out of range"); }
+    return memory[address];
+}
+
+template <class MemType, std::size_t s>
+void constexpr Memory<MemType, s>::set(MemType address, MemType val) noexcept{
+    if (address >= this->size()) { throw std::out_of_range("ArrayList<X>::at() : index is out of range"); }
+    memory[address] = val;
+}
+
 
 } // end namespace cpu_lib
 
