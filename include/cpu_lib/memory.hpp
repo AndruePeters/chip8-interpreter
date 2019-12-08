@@ -10,7 +10,7 @@ template <class MemType, std::size_t s>
 class Memory {
 public:
     [[nodiscard]] constexpr auto get(const MemType address) const ;
-    void constexpr set(MemType address, MemType val) noexcept;
+    void constexpr set(MemType address, MemType val);
     auto constexpr size() const { return memory.size(); }
 
 protected:
@@ -19,13 +19,13 @@ protected:
 
 template <class MemType, std::size_t s>
 constexpr auto Memory<MemType, s>::get(const MemType address) const  {
-    if (address >= this->size()) { throw std::out_of_range("ArrayList<X>::at() : index is out of range"); }
+    if (address >= this->size()) { throw std::out_of_range("Memory::get() : address it out of range."); }
     return memory[address];
 }
 
 template <class MemType, std::size_t s>
-void constexpr Memory<MemType, s>::set(MemType address, MemType val) noexcept{
-    if (address >= this->size()) { throw std::out_of_range("ArrayList<X>::at() : index is out of range"); }
+void constexpr Memory<MemType, s>::set(MemType address, MemType val){
+    if (address >= this->size()) { throw std::out_of_range("Memory::set() : address is out of range"); }
     memory[address] = val;
 }
 
