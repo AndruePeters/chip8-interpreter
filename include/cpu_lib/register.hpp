@@ -6,15 +6,29 @@
 
 namespace cpu_lib {
 
-template <typename RegType, class RegCont = std::array<W>>
+template <class RegType, std::size_t s>
 class Register {
 public:
-    auto get(const W address) const;
-    void set(W address, auto const val);
-    void dump() const;
+    [[nodiscard]] constexpr auto get(const RegType regNum) const;
+    void constexpr set(const RegType regNum, const RegType val);
+    auto constexpr size() const { return s; }
 protected:
-    RegCont<RegType> register;
+    std::array<RegType, s> reg;
 }; // end class Register
+
+template <class RegType, std::size_t s>
+constexpr auto Register<RegType, s>::get(const RegType regNum) const
+{
+    if (regNum >= this->size()) { throw std::out_of_range("Register::get() : register does not exist."); }
+    return reg[regNum];
+}
+
+template <class RegType, std::size_t s>
+void constexpr Register<RegType, s>::set(const RegType regNum, const RegType val)
+{
+    if (regNum >= this->size()) { throw std::out_of_range("Register::set() : register does not exist."); }
+    reg[regNum] = val;
+}
 
 } // end namespace cpu_lib
 #endif
