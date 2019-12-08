@@ -10,8 +10,8 @@ template <class RegType, std::size_t s>
 class Register {
 public:
     [[nodiscard]] constexpr auto get(const RegType regNum) const;
-    void constexpr set(const RegType regNum, const RegType val);
-    auto constexpr size() const { return s; }
+    constexpr void set(const RegType regNum, const RegType val);
+    [[nodiscard]] constexpr auto size() const { return s; }
 protected:
     std::array<RegType, s> reg;
 }; // end class Register
@@ -24,7 +24,7 @@ constexpr auto Register<RegType, s>::get(const RegType regNum) const
 }
 
 template <class RegType, std::size_t s>
-void constexpr Register<RegType, s>::set(const RegType regNum, const RegType val)
+constexpr void Register<RegType, s>::set(const RegType regNum, const RegType val)
 {
     if (regNum >= this->size()) { throw std::out_of_range("Register::set() : register does not exist."); }
     reg[regNum] = val;
