@@ -28,6 +28,9 @@ namespace cpu_lib {
  * 
  * @tparam  s   The number of registers. If this register needs 16 registers, then this would be 16.
  * 
+ * Size of memory is sizeof(MemType) * s
+
+ * 
  */
 template <class RegType, std::size_t s>
 class Register {
@@ -39,7 +42,7 @@ public:
      * 
      * @param regNum register to lookup.
      * 
-     * @throw std::out_of_range() if regNum is greater than or equal to template-parameter \p s
+     * @throw std::out_of_range() if \p regNum is greater than or equal to template-parameter \p s
      */
     [[nodiscard]] constexpr auto get(const RegType regNum) const;
 
