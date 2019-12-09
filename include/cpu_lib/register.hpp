@@ -1,3 +1,13 @@
+
+/** @file register.hpp
+ * 
+ * @author Andrue Peters
+ * @date 10/08/19
+ * @brief Register template for use within a CPU.
+ * 
+ * This defines class Register which emulates a CPU register.
+ */
+
 #ifndef _REGISTER_HPP_
 #define _REGISTER_HPP_
 
@@ -6,13 +16,52 @@
 
 namespace cpu_lib {
 
+/**
+ * @class Register
+ * 
+ * @brief Emulates an internal register for a computer. 
+ * 
+ * @tparam  RegType Should be an unsigned integral type representing
+ *          the bitwidth for the register. For example, if the register 
+ *          is 8-bits wide then use uint8_t. If it's 32 bits wide, then use uint32_t.
+ *          Will be enforced with concepts in the future.
+ * 
+ * @tparam  s   The number of registers. If this register needs 16 registers, then this would be 16.
+ * 
+ */
 template <class RegType, std::size_t s>
 class Register {
 public:
+
+    /**
+     * @brief Returns the value stored in register regNum.
+     * @return Returns value stored in \p regNum
+     * 
+     * @param regNum register to lookup.
+     * 
+     * @throw std::out_of_range() if regNum is greater than or equal to template-parameter \p s
+     */
     [[nodiscard]] constexpr auto get(const RegType regNum) const;
+
+    /**
+     * @brief Sets the register \p regNum to \p val . 
+     * 
+     * @param regNum register to lookup
+     * @param val Values to store in \p regNum
+     * 
+     * @throw std::out_of_range() if regNum is greater than or equal to template-parameter \p s
+     */
     constexpr void set(const RegType regNum, const RegType val);
+
+    /**
+     * @return Returns the given size from \p s.
+     */
     [[nodiscard]] constexpr auto size() const { return s; }
 protected:
+
+    /**
+     * Represents the internal register.
+     */
     std::array<RegType, s> reg;
 }; // end class Register
 
