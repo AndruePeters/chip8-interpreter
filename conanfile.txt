@@ -2,6 +2,8 @@
 sfml/2.5.1@bincrafters/stable
 spdlog/[>=1.4.1]@bincrafters/stable
 rang/3.1.0@rang/stable
+gtest/1.8.1@bincrafters/stable
+fmt/6.0.0@bincrafters/stable 
 
 [generators]
 cmake
