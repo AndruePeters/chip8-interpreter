@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.10)
 project(chip8 VERSION 0.0.1 LANGUAGES CXX)
-
+ include (CTest)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -79,6 +79,14 @@ conan_cmake_run(CONANFILE conanfile.txt
 find_package(fmt)
 find_package(rang)
 find_package(spdlog)
+find_package(GTest REQUIRED)
+
+
+
+# Add Tests
+enable_testing()
+add_subdirectory(test)
+
 
 add_executable(chip8 src/main.cpp)
 set_property(TARGET chip8 PROPERTY CXX_STANDARD 17)
