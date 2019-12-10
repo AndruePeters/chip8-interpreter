@@ -3,39 +3,39 @@
 # chip8-interpreter
 Interpreter for Chip 8. First emulator using this resource: <http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/>
 
-# Architecture
-## Memory
+## Architecture
+### Memory
     * 4096 (0x1000) 8-bit memory locations
     * Typically CHIP interpreter occupies the top 512 bytes
     * Uppermost 256 bytes (0xF00-0xFFF) are reserved for display refresh
     * (0xEA0-0xEFF) reserved for call stack.
 
-## Regsiters
+### Regsiters
     * 16 8-bit registers named V0-VF.
     * VF is the carry flag in addition, no borrow flag in subtraction, draw instruction for pixel collision.
     * Address register, I, is 16-bits wide
 
-## Stack
+### Stack
     * Only used to store return addresses when subroutines are called.
     * Original 1802 had 48 bytes for up to 24 levels of nesting
 
-## Timers
+### Timers
     * Two timers that count down at 60 Hz
         * Delay Timer: Intended to be used for timing events of the games. Can be set and read.
         * Sound Timer: Used for sound effects. When value is nonzero, a beeping sound is made.
 
-## Input
+### Input
     * Hex Keyboard with 16 keys ranging from 0 to F.
     * '8', '4', '6', and '2' are typically used for directional input
 
-## Audio and Graphics
+### Audio and Graphics
     * Resolution: 64 * 32 monochrome
     * Sprites are 8 pixels wide and 1-15 pixels heigh
     * Sprite pixels are XOR'd with corresponding screen pixels.
     * VF is set if any screen pixels are flipped from set to unset when a sprite is drawn for collision detection.
     * Beeping sound is played when value of soudn timer is nonzero.
 
-## Opcode Table
+### Opcode Table
     * 35 two-byte opcodes stored in big-endian
     * NNN: address
     * NN: 8-bit constant
