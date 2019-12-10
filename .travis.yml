@@ -15,7 +15,7 @@ addons:
 
 
 install:
-  - pip install --user conan conan_package_tools cmake urllib3
+  - pip3 install --user conan conan_package_tools cmake urllib3
 
 
 script:
