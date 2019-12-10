@@ -61,7 +61,7 @@ constexpr auto Memory<MemType, s>::get(const MemType address) const  {
 
 template <class MemType, std::size_t s>
 void constexpr Memory<MemType, s>::set(MemType address, MemType val){
-    if (address >= this->size()) { throw std::out_of_range("Memory::set() : address is out of range"); }
+    if (address >= this->size()) { throw std::out_of_range("Memory::set() : address is out of range."); }
     memory[address] = val;
 }
 
