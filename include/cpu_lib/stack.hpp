@@ -22,7 +22,6 @@ namespace cpu_lib {
 template <class StackType, std::size_t s>
 class Stack {
 public:
-
     /**
      * @return Returns and removes top element of stack.
      */
@@ -42,8 +41,8 @@ public:
      * @return Size of stack, template parameter s
      */
     [[nodiscard]] constexpr auto size() const {return s;}
+    
 protected:
-
     /**
      * Stack
      */

@@ -21,7 +21,6 @@ namespace cpu_lib {
 template <class MemType, std::size_t s>
 class Memory {
 public:
-
     /**
      * @brief Returns the value stored in address.
      * @return Returns value stored in \p address
@@ -48,7 +47,6 @@ public:
     [[nodiscard]] auto constexpr size() const { return memory.size(); }
 
 protected:
-
     /**
      * Represents internal memory.
      */

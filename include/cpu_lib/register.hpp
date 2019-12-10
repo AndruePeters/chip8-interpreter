@@ -35,7 +35,6 @@ namespace cpu_lib {
 template <class RegType, std::size_t s>
 class Register {
 public:
-
     /**
      * @brief Returns the value stored in register regNum.
      * @return Returns value stored in \p regNum
@@ -60,6 +59,7 @@ public:
      * @return Returns the given size from \p s.
      */
     [[nodiscard]] constexpr auto size() const { return s; }
+    
 protected:
 
     /**
