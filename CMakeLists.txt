@@ -64,6 +64,19 @@ endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_check(REQUIRED)
+
+execute_process(COMMAND ${CONAN_CMD} remote list OUTPUT_VARIABLE CONAN_REMOTES)
+
+if("${CONAN_REMOTES}" MATCHES ".*conan-community:.*")
+    execute_process(COMMAND ${CONAN_CMD} remote update -i 1 conan-community
+        https://api.bintray.com/conan/conan-community/conan)
+else()
+    message(STATUS "Conan adding community remote repositoy \
+        (https://api.bintray.com/conan/conan-community/conan)")
+    execute_process(COMMAND ${CONAN_CMD} remote add -i 1 conan-community
+        https://api.bintray.com/conan/conan-community/conan)
+endif()
+
 conan_cmake_run(CONANFILE conanfile.txt
                 BASIC_SETUP
                 CONAN_COMMAND ${CONAN_CMD}
