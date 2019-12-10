@@ -67,15 +67,8 @@ conan_check(REQUIRED)
 
 execute_process(COMMAND ${CONAN_CMD} remote list OUTPUT_VARIABLE CONAN_REMOTES)
 
-if("${CONAN_REMOTES}" MATCHES ".*conan-community:.*")
-    execute_process(COMMAND ${CONAN_CMD} remote update -i 1 conan-community
-    https://api.bintray.com/conan/bincrafters/public-conan)
-else()
-    message(STATUS "Conan adding community remote repositoy \
-        ( https://api.bintray.com/conan/bincrafters/public-conan)")
-    execute_process(COMMAND ${CONAN_CMD} remote add -i 1 conan-community
-    https://api.bintray.com/conan/bincrafters/public-conann)
-endif()
+conan_add_remote(NAME bincrafters INDEX 1
+    URL https://api.bintray.com/conan/bincrafters/public-conan)
 
 conan_cmake_run(CONANFILE conanfile.txt
                 BASIC_SETUP
