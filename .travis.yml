@@ -17,4 +17,4 @@ install:
 
 
 script:
-  - g++ src/main.cpp
+  - cmake . -B_build -DCMAKE_BUILD_TYPE=Debug && cmake --build _build
