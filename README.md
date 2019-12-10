@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/AndruePeters/chip8-interpreter.svg?branch=master)](https://travis-ci.org/AndruePeters/chip8-interpreter)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c5339a3ed24dbcaee7a86318f29ced)](https://www.codacy.com/manual/AndruePeters/chip8-interpreter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AndruePeters/chip8-interpreter&amp;utm_campaign=Badge_Grade)
 
 # chip8-interpreter
 Interpreter for Chip 8. First emulator using this resource: <http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/>
