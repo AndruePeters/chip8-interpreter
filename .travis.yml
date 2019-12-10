@@ -13,7 +13,7 @@ addons:
 
 
 install:
-  - pip install --user conan cmake
+  - pip install --user conan cmake urllib3
 
 
 script:
