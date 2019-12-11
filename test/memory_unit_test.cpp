@@ -53,6 +53,11 @@ TEST(MemoryUnitTest, invalid_get)
     }
 }
 
+
+/**
+ * @brief Tests that the size passed in is correct.
+ * Uncomment the lines in the test to force a compile time error.
+ */
 TEST(MemoryUnitTest, size)
 {
     Memory<uint32_t, 256> mem1;
