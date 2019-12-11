@@ -32,7 +32,7 @@ namespace cpu_lib {
 
  * 
  */
-template <class RegType, std::size_t s>
+template <class RegType, std::size_t Size>
 class Register {
 public:
     /**
@@ -63,14 +63,14 @@ public:
     /**
      * @return Returns the given size from \p s.
      */
-    [[nodiscard]] constexpr auto size() const { return s; }
+    [[nodiscard]] constexpr auto size() const { return Size; }
     
 protected:
 
     /**
      * Represents the internal register.
      */
-    std::array<RegType, s> reg;
+    std::array<RegType, Size> reg;
 }; // end class Register
 
 template <class RegType, std::size_t s>
