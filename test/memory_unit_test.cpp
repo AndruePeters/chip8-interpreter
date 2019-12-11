@@ -18,7 +18,7 @@ TEST(MemoryUnitTest, invalid_set)
 {
     Memory<uint32_t, 256> memory;
     try {
-        memory.set(256)
+        memory.set(256, 0x00);
         FAIL() << "Expected std::out_of_range.";
     }
     catch(std::out_of_range const & err) {
@@ -33,11 +33,11 @@ TEST(MemoryUnitTest, invalid_get)
 {
     Memory<uint32_t, 256> memory;
     try {
-        memory.get(256)
+        auto tempVal = memory.get(256);
         FAIL() << "Expected std::out_of_range.";
     }
     catch(std::out_of_range const & err) {
-        EXPECT_EQ(err.what(),std::string("Memory::get() : address is out of range."));
+        EXPECT_EQ(err.what(),std::string("Memory::get() : address it out of range."));
     }
     catch(...) {
         FAIL() << "Expected std::out_of_range.";
