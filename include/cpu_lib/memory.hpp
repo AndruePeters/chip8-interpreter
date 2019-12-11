@@ -21,6 +21,9 @@ namespace cpu_lib {
 template <class MemType, std::size_t Size>
 class Memory {
 public:
+    /**
+     * Size can never be 0.
+     */
     static_assert(Size > 0, "In class Memory, template-parameter Size must be greater than 0.");
 
     /**
