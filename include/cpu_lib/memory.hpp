@@ -14,7 +14,7 @@ namespace cpu_lib {
  * @tparam  MemType  Represents the bitwidth of the memory. If it's 8-bits then use uint8_t.
  *                  Also determines arguments for parameters.
  * 
- * @param   Size Size of memory to be made.
+ * @tparam   Size Size of memory to be made.
  * 
  * Size of memory is sizeof(MemType) * s
  */
