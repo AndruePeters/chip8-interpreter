@@ -18,9 +18,11 @@ namespace cpu_lib {
  * 
  * Size of memory is sizeof(MemType) * s
  */
-template <class MemType, std::size_t s>
+template <class MemType, std::size_t Size>
 class Memory {
 public:
+    static_assert(Size > 0, "In class Memory, template-parameter Size must be greater than 0.");
+
     /**
      * @brief Returns the value stored in address.
      * @return Returns value stored in \p address
@@ -44,13 +46,13 @@ public:
     /**
      * @return  The number of memory cells to create.
      */
-    [[nodiscard]] auto constexpr size() const { return memory.size(); }
+    [[nodiscard]] auto constexpr size() const { return Size; }
 
 protected:
     /**
      * Represents internal memory.
      */
-    std::array<MemType, s> memory;
+    std::array<MemType, Size> memory;
 };
 
 template <class MemType, std::size_t s>
