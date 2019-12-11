@@ -14,13 +14,18 @@ namespace cpu_lib {
  * @tparam  MemType  Represents the bitwidth of the memory. If it's 8-bits then use uint8_t.
  *                  Also determines arguments for parameters.
  * 
- * @param   s Size of memory to be made.
+ * @param   Size Size of memory to be made.
  * 
  * Size of memory is sizeof(MemType) * s
  */
-template <class MemType, std::size_t s>
+template <class MemType, std::size_t Size>
 class Memory {
 public:
+    /**
+     * Size can never be 0.
+     */
+    static_assert(Size > 0, "In class Memory, template-parameter Size must be greater than 0.");
+
     /**
      * @brief Returns the value stored in address.
      * @return Returns value stored in \p address
@@ -44,13 +49,13 @@ public:
     /**
      * @return  The number of memory cells to create.
      */
-    [[nodiscard]] auto constexpr size() const { return memory.size(); }
+    [[nodiscard]] auto constexpr size() const { return Size; }
 
 protected:
     /**
      * Represents internal memory.
      */
-    std::array<MemType, s> memory;
+    std::array<MemType, Size> memory;
 };
 
 template <class MemType, std::size_t s>
@@ -61,7 +66,7 @@ constexpr auto Memory<MemType, s>::get(const MemType address) const  {
 
 template <class MemType, std::size_t s>
 void constexpr Memory<MemType, s>::set(MemType address, MemType val){
-    if (address >= this->size()) { throw std::out_of_range("Memory::set() : address is out of range"); }
+    if (address >= this->size()) { throw std::out_of_range("Memory::set() : address is out of range."); }
     memory[address] = val;
 }
 
