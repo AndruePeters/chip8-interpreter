@@ -26,15 +26,20 @@ namespace cpu_lib {
  *          is 8-bits wide then use uint8_t. If it's 32 bits wide, then use uint32_t.
  *          Will be enforced with concepts in the future.
  * 
- * @tparam  s   The number of registers. If this register needs 16 registers, then this would be 16.
+ * @tparam  Size   The number of registers. If this register needs 16 registers, then this would be 16.
  * 
  * Size of memory is sizeof(MemType) * s
 
  * 
  */
-template <class RegType, std::size_t s>
+template <class RegType, std::size_t Size>
 class Register {
 public:
+    /**
+     * Size can never be 0 or less.
+     */
+    static_assert(Size > 0, "In class Memory, template-parameter Size must be greater than 0.");
+    
     /**
      * @brief Returns the value stored in register regNum.
      * @return Returns value stored in \p regNum
@@ -58,14 +63,14 @@ public:
     /**
      * @return Returns the given size from \p s.
      */
-    [[nodiscard]] constexpr auto size() const { return s; }
+    [[nodiscard]] constexpr auto size() const { return Size; }
     
 protected:
 
     /**
      * Represents the internal register.
      */
-    std::array<RegType, s> reg;
+    std::array<RegType, Size> reg;
 }; // end class Register
 
 template <class RegType, std::size_t s>

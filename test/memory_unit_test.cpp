@@ -42,7 +42,7 @@ TEST(MemoryUnitTest, invalid_get)
 {
     Memory<uint32_t, 256> memory;
     try {
-        auto tempVal = memory.get(256);
+        [[maybe_unused]] auto tempVal = memory.get(256);
         FAIL() << "Expected std::out_of_range.";
     }
     catch(std::out_of_range const & err) {
