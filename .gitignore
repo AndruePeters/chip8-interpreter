@@ -33,3 +33,5 @@
 
 # build specific stuff
 _build
+
+.vscode
