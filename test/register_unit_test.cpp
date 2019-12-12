@@ -42,7 +42,7 @@ TEST(RegisterUnitTest, invalid_get)
 {
     Register<uint32_t, 256> reg;
     try {
-        auto tempVal = reg.get(256);
+        [[maybe_unused]] auto tempVal = reg.get(256);
         FAIL() << "Expected std::out_of_range.";
     }
     catch(std::out_of_range const & err) {
