@@ -45,7 +45,8 @@ TEST(StackUnitTest, stack_push_pop_peek_size)
         stack1.pop();
     }
 
-    
+    ASSERT_EQ(stackLimit, stack1.sizeLimit());
+    ASSERT_EQ(0, stack1.sizeUsed());
 }
 
 /**
