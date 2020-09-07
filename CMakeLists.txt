@@ -1,95 +1,77 @@
-cmake_minimum_required(VERSION 3.10)
-project(chip8 VERSION 0.0.1 LANGUAGES CXX)
- include (CTest)
+cmake_minimum_required(VERSION 3.15)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-# conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
-
-
-# Link this 'library' to use the standard warnings
-add_library(project_warnings INTERFACE)
+# Set the project name to your project name, my project isn't very descriptive
+project(Chip8 CXX)
+include(cmake/StandardProjectSettings.cmake)
 
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
-
 target_compile_features(project_options INTERFACE cxx_std_17)
-target_include_directories(project_options INTERFACE include)
 
-if (MSVC)
-    target_compile_options(project_warnings INTERFACE /W4 /WX "/permissive-")
-else ()
-
-    target_compile_options(project_warnings
-                            INTERFACE
-                            -Wall
-                            -Wextra # reasonable and standard
-                            -Wshadow # warn the user if a variable declaration shadows one from a
-                                    # parent context
-                            -Wnon-virtual-dtor # warn the user if a class with virtual functions has a
-                                                # non-virtual destructor. This helps catch hard to
-                                                # track down memory errors
-                            -Wold-style-cast # warn for c-style casts
-                            -Wcast-align # warn for potential performance problem casts
-                            -Wunused # warn on anything being unused
-                            -Woverloaded-virtual # warn if you overload (not override) a virtual
-                                                # function
-                            -Wpedantic # warn if non-standard C++ is used
-                            -Wconversion # warn on type conversions that may lose data
-                            -Wsign-conversion # warn on sign conversions
-                            -Wmisleading-indentation # warn if identation implies blocks where blocks
-                                                    # do not exist
-                            -Wduplicated-cond # warn if if / else chain has duplicated conditions
-                            -Wduplicated-branches # warn if if / else branches have duplicated code
-                            -Wlogical-op # warn about logical operations being used where bitwise were
-                                        # probably wanted
-                            -Wnull-dereference # warn if a null dereference is detected
-                            -Wuseless-cast # warn if you perform a cast to the same type
-                            -Wdouble-promotion # warn if float is implicit promoted to double
-                            -Wformat=2 # warn on security issues around functions that format output
-                                        # (ie printf)
-                            )
+if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+  option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
+  if (ENABLE_BUILD_WITH_TIME_TRACE)
+    add_compile_definitions(project_options INTERFACE -ftime-trace)
+  endif()
 endif()
 
-#
-# Load Conan
-#
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-  message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-  file( DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.12/conan.cmake"
-      "${CMAKE_BINARY_DIR}/conan.cmake")
+# Link this 'library' to use the warnings specified in CompilerWarnings.cmake
+add_library(project_warnings INTERFACE)
+
+# standard compiler warnings
+include(cmake/CompilerWarnings.cmake)
+set_project_warnings(project_warnings)
+
+# sanitizer options if supported by compiler
+include(cmake/Sanitizers.cmake)
+enable_sanitizers(project_options)
+
+# enable doxygen
+include(cmake/Doxygen.cmake)
+enable_doxygen()
+
+# allow for static analysis options
+include(cmake/StaticAnalyzers.cmake)
+
+option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
+option(ENABLE_TESTING "Enable Test Builds" OFF)
+option(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
+
+# Set up some extra Conan dependencies based on our needs
+# before loading Conan
+set(CONAN_EXTRA_REQUIRES "")
+set(CONAN_EXTRA_OPTIONS "")
+
+if(CPP_STARTER_USE_IMGUI)
+  set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES}
+                           imgui-sfml/2.1@bincrafters/stable)
+
+  # set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sfml:shared=False
+  # sfml:graphics=True sfml:audio=False sfml:window=True
+  # libalsa:disable_python=True)
 endif()
 
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_check(REQUIRED)
 
-execute_process(COMMAND ${CONAN_CMD} remote list OUTPUT_VARIABLE CONAN_REMOTES)
+include(cmake/Conan.cmake)
+run_conan()
 
-conan_add_remote(NAME bincrafters INDEX 1
-    URL https://api.bintray.com/conan/bincrafters/public-conan)
+if(ENABLE_TESTING)
+  enable_testing()
+  message(
+    "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
+  )
+  add_subdirectory(test)
+endif()
 
-conan_cmake_run(CONANFILE conanfile.txt
-                BASIC_SETUP
-                CONAN_COMMAND ${CONAN_CMD}
-                BUILD missing)
+if(ENABLE_FUZZING)
+  message(
+    "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html"
+  )
+  add_subdirectory(fuzz_test)
+endif()
 
-
-find_package(fmt)
-find_package(rang)
-find_package(spdlog)
-find_package(GTest REQUIRED)
-
-
-
-# Add Tests
-enable_testing()
-add_subdirectory(test)
+add_subdirectory(include)
+add_subdirectory(src)
 
 
-add_executable(chip8 src/main.cpp)
-set_property(TARGET chip8 PROPERTY CXX_STANDARD 17)
-target_link_libraries(chip8 PRIVATE project_options
-                                    project_warnings
-                                    fmt::fmt)
+
