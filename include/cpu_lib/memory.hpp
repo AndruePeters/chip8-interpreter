@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <array>
+#include <stdexcept>
 
 
 namespace cpu_lib {

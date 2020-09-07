@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <stack>
+#include <stdexcept>
 
 namespace cpu_lib {
 
