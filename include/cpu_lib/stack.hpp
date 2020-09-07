@@ -1,5 +1,5 @@
 #ifndef _STACK_H_
-#define _STAKE_H_
+#define _STACK_H_
 
 #include <algorithm>
 #include <array>
@@ -85,10 +85,5 @@ void Stack<StackType, SizeLimit>::push(const StackType val)
     }
     stack.push(val);
 }
-
-
-
-
-
 } // end namespace cpu_lib
 #endif
