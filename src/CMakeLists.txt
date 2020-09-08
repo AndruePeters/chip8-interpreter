@@ -4,4 +4,5 @@ target_link_libraries(chip8 PUBLIC
         project_warnings
         cpulib
         CONAN_PKG::fmt
+        CONAN_PKG::imgui-sfml
         )
