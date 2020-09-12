@@ -44,11 +44,11 @@ namespace chip8 {
     };
 
 
-    class cpu {
+    struct CPU {
         std::array<uint8_t, 4096> ram_;
         std::array<uint8_t, 16> registers_;
         uint16_t address_register_;
-        std::stack <uint16_t> call_stack_;
+        std::array<uint16_t, 64> call_stack_;
     };
 } // end namespace chip8
 #endif
